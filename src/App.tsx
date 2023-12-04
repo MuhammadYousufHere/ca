@@ -1,13 +1,15 @@
-import './App.css'
-import { Button, Keyboard } from '@/components'
+import { Provider } from 'react-redux'
+import { AppRoutes } from './routes'
+import { BrowserRouter as Router } from 'react-router-dom'
+import { store } from './features'
 
 function App() {
   return (
-    <>
-      <div>hello</div>
-      <Keyboard />
-      <Button />
-    </>
+    <Provider store={store}>
+      <Router>
+        <AppRoutes />
+      </Router>
+    </Provider>
   )
 }
 
