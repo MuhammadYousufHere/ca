@@ -1,0 +1,32 @@
+.header_container {
+  width: 100%;
+  display: flex;
+  gap: 0.8rem;
+  background: #fff;
+  /* position: sticky; */
+  position: fixed;
+  padding: 1.25rem;
+  transition: 0.3s width;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
+  font-weight: 600;
+  align-items: center;
+}
+
+.burger_menu {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+.burger {
+  font-size: 1.7rem;
+  font-weight: 700;
+  /* transform: rotate(180deg); */
+}
+h4 {
+  margin: 0;
+  padding-bottom: 0.3rem;
+}
