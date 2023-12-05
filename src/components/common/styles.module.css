@@ -1,0 +1,182 @@
+.app_button {
+  background: rgb(71, 161, 124);
+  background: linear-gradient(
+    90deg,
+    rgba(71, 161, 124, 1) 0%,
+    rgba(17, 85, 71, 1) 100%
+  );
+  border: none;
+  padding: 0.6rem 1.3rem;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  border-radius: 6px;
+  display: flex;
+  place-items: center;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 1px 1px;
+  transition: box-shadow 0.05s ease-in-out, opacity 0.05s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  gap: 0.5rem;
+}
+.app_button p {
+  font-size: 0.86rem;
+  margin: 0;
+  padding: 0;
+}
+.app_button:hover {
+  box-shadow: rgba(255, 255, 255, 0.3) 0 0 2px inset,
+    rgba(0, 0, 0, 0.4) 0 1px 2px;
+  text-decoration: none;
+  transition-duration: 0.15s, 0.15s;
+}
+
+.app_button:active {
+  box-shadow: rgba(0, 0, 0, 0.15) 0 2px 4px inset, rgba(0, 0, 0, 0.4) 0 1px 1px;
+}
+
+.app_button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.app_button:disabled:active {
+  pointer-events: none;
+}
+
+.app_button:disabled:hover {
+  box-shadow: none;
+}
+
+/* Modal  */
+
+.modal {
+  display: grid;
+  overflow-y: scroll;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  padding: 2rem;
+  place-items: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+
+.modal_inner {
+  overflow: hidden;
+  position: relative;
+  border-radius: 0.5rem;
+  width: 100%;
+  max-width: 28rem;
+  color: #ffffff;
+  background: #f3f3f3;
+
+  cursor: default;
+
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 8px 18px, rgba(0, 0, 0, 0.28) 0px 5px 5px;
+}
+.modal_box {
+  z-index: 10;
+  position: relative;
+  text-align: center;
+}
+.modal_label {
+  font-family: 'DM Serif Display';
+  position: absolute;
+  inset: 0;
+  margin-top: 3.3rem;
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+.modal_head {
+  position: relative;
+  min-height: 100px;
+  overflow: hidden;
+}
+.modal_head::before {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  z-index: -1;
+
+  background: url('/public/rainbow-vortex.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 100%;
+  transform: rotate(190deg);
+}
+
+.modal_head .close_icon {
+  position: absolute;
+  right: 6px;
+  top: 12px;
+  z-index: 1;
+  outline: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.modal_head .close_icon svg {
+  font-size: 1.2rem;
+}
+.modal_body {
+  padding: 1rem;
+}
+.modal_box .actions_box {
+  padding: 1rem;
+
+  display: flex;
+}
+.modal_box .actions_box button {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Loader */
+.loader {
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  position: relative;
+  animation: rotate 1s linear infinite;
+}
+.loader::before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  inset: 0px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  animation: prixClipFix 2s linear infinite;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes prixClipFix {
+  0% {
+    clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0);
+  }
+  25% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0);
+  }
+  50% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%);
+  }
+  75% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%);
+  }
+  100% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0);
+  }
+}
