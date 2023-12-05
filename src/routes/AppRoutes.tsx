@@ -7,7 +7,10 @@ export default function AppRoutes() {
     {
       path: '/',
       element: <Layout />,
-      children: [{ path: '/customers', element: <Customers /> }],
+      children: [
+        { path: '/customers', element: <Customers /> },
+        { path: '/', element: <Navigate to='/customers' /> },
+      ],
     },
     {
       path: '/404',
