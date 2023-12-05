@@ -1,0 +1,22 @@
+.customer_item {
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  padding: 0.5rem;
+  background: #ffffff;
+  justify-content: space-between;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.customer_item .customer_name {
+  color: #72c6a0;
+  font-weight: 400;
+  text-decoration: underline;
+  font-size: 0.9rem;
+}
+
+.customer_item .styles.item_box {
+  flex: 1;
+  text-align: start;
+}

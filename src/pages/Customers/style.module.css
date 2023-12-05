@@ -1,0 +1,82 @@
+.customers_table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.76rem;
+  margin-block: 1rem;
+}
+
+/* Add Customer  */
+
+.addcustomer_wrapper {
+  margin-block: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+/* Delete Customer */
+.delete_container {
+  padding: 1rem;
+  background-color: #fff;
+  color: black;
+  font-weight: 400;
+}
+.delete_container .delete_modal_close {
+  display: flex;
+  justify-content: flex-end;
+}
+.delete_container .delete_modal_close button {
+  all: unset;
+  cursor: pointer;
+  font-size: 1.15rem;
+}
+
+.delete_container .delete_body {
+  line-height: 1;
+}
+.delete_container .delete_body svg {
+  font-size: 3rem;
+}
+.delete_container .delete_body h4 {
+  line-height: 1;
+  margin-block: 1rem;
+  font-weight: 600;
+}
+
+.delete_container .delete_body p {
+  line-height: 1.3;
+  margin: 0;
+  padding: 0;
+}
+.delete_container .delete_body p:last-of-type {
+  margin-bottom: 2rem;
+}
+
+.delete_container .delete_actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.delete_container .delete_actions button {
+  all: unset;
+  cursor: pointer;
+  color: #fff;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  width: 100%;
+  transition: all 0.3s ease;
+  min-height: 24px;
+}
+.delete_container .delete_actions button:first-of-type:hover:not(:active) {
+  box-shadow: rgba(0, 0, 0, 0.24) 0 0 0 0.125em;
+}
+.delete_container .delete_actions button:first-of-type {
+  background: #a5a5af;
+}
+
+.delete_container .delete_actions button:last-of-type {
+  background: #d4000a;
+}
+.delete_container .delete_actions button:last-of-type:hover:not(:active) {
+  box-shadow: #ec989a 0 0 0 0.125em;
+}
