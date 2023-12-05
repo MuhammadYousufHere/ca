@@ -1,0 +1,1 @@
+export { SidebarHead } from './SidebarHead'
