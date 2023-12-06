@@ -1,0 +1,18 @@
+version: '3'
+services:
+  mariadb:
+    image: mariadb
+    container_name: mariadb
+    networks:
+      - comm_network
+    environment:
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+      - MYSQL_ROOT_PASSWORD=password123@
+      - MYSQL_ROOT_HOST=%
+    ports:
+      - 3306:3306
+
+networks:
+  comm_network:
+    name: mariadb_database
