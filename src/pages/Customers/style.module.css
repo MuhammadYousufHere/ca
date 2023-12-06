@@ -3,8 +3,11 @@
   flex-direction: column;
   gap: 0.76rem;
   margin-block: 1rem;
+  text-align: center;
 }
-
+.customers_table > p {
+  margin-top: 12rem;
+}
 /* Add Customer  */
 
 .addcustomer_wrapper {
@@ -64,7 +67,6 @@
   border-radius: 6px;
   font-size: 0.85rem;
   width: 100%;
-  transition: all 0.3s ease;
   min-height: 24px;
 }
 .delete_container .delete_actions button:first-of-type:hover:not(:active) {
@@ -76,6 +78,9 @@
 
 .delete_container .delete_actions button:last-of-type {
   background: #d4000a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .delete_container .delete_actions button:last-of-type:hover:not(:active) {
   box-shadow: #ec989a 0 0 0 0.125em;

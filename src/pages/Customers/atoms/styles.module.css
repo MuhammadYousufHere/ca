@@ -15,8 +15,7 @@
   place-items: center;
   /* flex: 1; */
 }
-.stack .customer_name {
-}
+
 .avatar_figure {
   overflow: hidden;
   border-radius: 9px;
@@ -67,4 +66,18 @@
 .actions_container > *:last-child {
   color: #dc2835;
   background-color: #ec989a;
+}
+
+/* Sort Button */
+
+.sort_button {
+  color: inherit;
+  border: none;
+  font: inherit;
+  outline: inherit;
+  all: unset;
+  align-self: center;
+  font-size: 0.86rem;
+  font-weight: 500;
+  cursor: pointer;
 }

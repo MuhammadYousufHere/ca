@@ -8,13 +8,13 @@ interface Props<T> {
 export default function TableHeader({ columns }: Props<IData>): JSX.Element {
   return (
     <tr>
-      {columns.map((column, columnIndex) => (
+      {columns.map(({ Icon, ...column }, columnIndex) => (
         <th
           className={styles.th}
           key={`table-head-cell-${columnIndex}`}
           style={{ width: column.width }}
         >
-          {column.title} {column.Icon}
+          {column.title} {Icon}
         </th>
       ))}
     </tr>
