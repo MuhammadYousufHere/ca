@@ -9,6 +9,7 @@ import { addCustomer } from '@/features/customers/customerSlice'
 type Props = {
   isOpen: boolean
   setIsOpen: Dispatch<SetStateAction<boolean>>
+  lastUserId: number
 }
 export type Values = {
   name: string
@@ -17,7 +18,7 @@ export type Values = {
 }
 const initialValues = { name: '', email: '', profileUrl: '/avatar.png' }
 
-export default function AddCustomer({ isOpen, setIsOpen }: Props) {
+export default function AddCustomer({ isOpen, setIsOpen, lastUserId }: Props) {
   const dispatch = useAppDispatch()
   const [values, setValues] = useState<Values>(initialValues)
   const [isLoading, setIsLoading] = useState(false)
@@ -41,7 +42,7 @@ export default function AddCustomer({ isOpen, setIsOpen }: Props) {
   async function handleSubmit() {
     setIsLoading(true)
     await sleep()
-    dispatch(addCustomer({ ...values, id: '003' }))
+    dispatch(addCustomer({ ...values, id: String(++lastUserId) }))
     setValues(initialValues)
     setIsLoading(false)
     setIsOpen(false)
@@ -61,6 +62,7 @@ export default function AddCustomer({ isOpen, setIsOpen }: Props) {
           name='name'
           value={values.name}
           onChange={handleChange}
+          autoFocus
           placeholder='Customer Name'
         />
         <Input

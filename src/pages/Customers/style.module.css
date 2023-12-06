@@ -1,12 +1,11 @@
 .customers_table {
   display: flex;
   flex-direction: column;
-  gap: 0.76rem;
-  margin-block: 1rem;
-  text-align: center;
+  margin-block: 1.6rem;
 }
-.customers_table > p {
+.customers_table .empty_list {
   margin-top: 12rem;
+  text-align: center;
 }
 /* Add Customer  */
 

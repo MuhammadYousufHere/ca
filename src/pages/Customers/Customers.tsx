@@ -128,7 +128,7 @@ const Customers = () => {
                 columns={columns}
               />
             ) : (
-              <p>Nothing to see here!</p>
+              <p className={styles.empty_list}>Nothing to see here!</p>
             )}
           </div>
         </AnimatePresence>
@@ -136,6 +136,7 @@ const Customers = () => {
       <AddCustomer
         isOpen={addCustomer}
         setIsOpen={setAddCustomer}
+        lastUserId={(customers[customers?.length - 1]?.id || 0) as number}
       />
     </>
   )
