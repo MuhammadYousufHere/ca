@@ -11,3 +11,11 @@
   object-fit: cover;
   transition: 0.5s transform;
 }
+.mobile_close {
+  all: unset;
+  color: white;
+  position: absolute;
+  right: 19px;
+  top: 19px;
+  cursor: pointer;
+}

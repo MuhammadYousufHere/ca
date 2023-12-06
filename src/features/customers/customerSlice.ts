@@ -20,8 +20,10 @@ type InitalState = {
   isError: boolean
   error: unknown
 }
+const customers =
+  JSON.parse(window.localStorage.getItem('s-customers') || '[]') || []
 const initialState: InitalState = {
-  customers: [],
+  customers,
   isLoading: false,
   isSuccess: false,
   isError: false,
@@ -68,7 +70,9 @@ const customerSlice = createSlice({
       state,
       { payload }: PayloadAction<Omit<IData, 'actions'>>
     ) => {
-      state.customers = state.customers.concat(payload)
+      const newCustomers = state.customers.concat(payload)
+      state.customers = newCustomers
+      window.localStorage.setItem('s-customers', JSON.stringify(newCustomers))
     },
     deleteCustomer: (state, { payload }: PayloadAction<{ id: string }>) => {
       state.customers = state.customers.filter(({ id }) => id !== payload.id)
@@ -123,7 +127,6 @@ const customerSlice = createSlice({
       .addCase(getCustomers.fulfilled, (state, { payload }) => {
         state.isLoading = false
         state.isSuccess = true
-
         state.customers = payload.data.map((user) => ({
           name: `${user.first_name} ${user.last_name}`,
           id: String(user.id),

@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   margin-block: 1.6rem;
+  overflow-x: auto;
 }
 .customers_table .empty_list {
   margin-top: 12rem;

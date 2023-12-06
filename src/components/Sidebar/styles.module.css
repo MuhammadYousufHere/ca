@@ -12,8 +12,17 @@
   padding-inline: 1rem;
   overflow: hidden;
 }
+.sidebar_mobile {
+  z-index: 1000;
+  position: fixed;
+  width: 15rem;
+}
+
 .sidebar_small {
   padding-inline: 0;
+}
+.isMobile {
+  display: none;
 }
 .boxicon_container {
   width: 100%;
@@ -24,14 +33,35 @@
   color: #fff;
   border-radius: 6px;
   transition: 0.4s background;
+  align-items: stretch;
+}
+.boxicon_container_mobile {
+  border-radius: 6px;
+
+  width: 100%;
+
+  background: #093933;
 }
 .expanded_boxicon_container {
   background: #093933;
+}
+.mobileExpanded {
+  width: 0rem;
+  transform: translateX(-100%);
 }
 .boxicon {
   padding-left: 0.5rem;
   animation-iteration-count: 1;
   z-index: 2;
+}
+.not_shrinked {
+  display: flex;
+}
+.shriked {
+  background: #093933;
+  border-radius: 0px 12px 12px 0px;
+  align-items: center;
+  /* padding-top: 0.4rem; */
 }
 
 .first_and_last_trash_fix {
