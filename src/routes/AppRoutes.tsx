@@ -1,6 +1,5 @@
 import { Layout } from '@/components'
 import { Customers, NotFound } from '@/pages'
-import React from 'react'
 import { Navigate, useRoutes } from 'react-router-dom'
 export default function AppRoutes() {
   return useRoutes([
@@ -9,7 +8,10 @@ export default function AppRoutes() {
       element: <Layout />,
       children: [
         { path: '/customers', element: <Customers /> },
-        { path: '/', element: <Navigate to='/customers' /> },
+        {
+          path: '/',
+          element: <Navigate to='/customers?sortby=id&order=asc' />,
+        },
       ],
     },
     {
