@@ -13,9 +13,6 @@ interface Props<T> {
 export default function TableRow({ data, columns }: Props<IData>): JSX.Element {
   return (
     <>
-      <tr className={styles.seperator}>
-        <td style={{ background: 'transparent' }}></td>
-      </tr>
       {data.map((item, itemIndex) => (
         <Fragment key={`table-body-${itemIndex}`}>
           <tr className={styles.seperator}>
