@@ -89,77 +89,81 @@ export default function Sidebar({
       })}
     </div>
   ) : (
-    <div
-      className={cn(styles.sidebar, {
-        [styles.expanded]: expanded,
-        [styles.sidebar_small]: !expanded,
-        [styles.isMobile]: isMobile,
-      })}
-    >
-      <SidebarHead
-        expended={expanded}
-        setMobExpended={setExpended}
-      />
-      {menuItems.map((item, index) => {
-        let middle = false
-        if (!(index === 0 || index === menuItems.length - 1)) {
-          middle = true
-        }
-        return (
-          <div
-            className={cn(styles.boxicon_container, {
-              [styles.expanded_boxicon_container]: expanded,
-            })}
-            onMouseEnter={() => {
-              if (middle) {
-                setHovered(index)
-              }
-            }}
-            onMouseLeave={() => {
-              if (middle) {
-                setHovered(null)
-              }
-            }}
-            onClick={() => {
-              if (middle) {
-                setActive(index)
-              }
-            }}
-            key={index}
-          >
-            <Link
-              to={item.to}
-              className={styles.boxicon_container}
+    <aside className={styles.app_sidebar}>
+      <div
+        className={cn(styles.sidebar, {
+          [styles.expanded]: expanded,
+          [styles.sidebar_small]: !expanded,
+          [styles.isMobile]: isMobile,
+        })}
+      >
+        <SidebarHead
+          expended={expanded}
+          setMobExpended={setExpended}
+        />
+        {menuItems.map((item, index) => {
+          let middle = false
+          if (!(index === 0 || index === menuItems.length - 1)) {
+            middle = true
+          }
+          return (
+            <div
+              className={cn(styles.boxicon_container, {
+                [styles.expanded_boxicon_container]: expanded,
+              })}
+              onMouseEnter={() => {
+                if (middle) {
+                  setHovered(index)
+                }
+              }}
+              onMouseLeave={() => {
+                if (middle) {
+                  setHovered(null)
+                }
+              }}
+              onClick={() => {
+                if (middle) {
+                  setActive(index)
+                }
+              }}
+              key={index}
             >
-              <span
-                className={cn(styles.not_shrinked, {
-                  [styles.shriked]: !expanded,
-                })}
+              <Link
+                to={item.to}
+                className={styles.boxicon_container}
               >
-                <item.Icon
-                  className={cn(styles.boxicon, {
-                    [styles.first_and_last_trash_fix]: !middle,
-                    [styles.active]: active === index,
+                <span
+                  className={cn(styles.not_shrinked, {
+                    [styles.shriked]: !expanded,
                   })}
-                  styles={{ fontSize: changeSmall ? '1rem' : '2rem' }}
-                  color={
-                    hovered === index || active === index ? '#c6c6cb' : 'white'
-                  }
-                ></item.Icon>
-              </span>
-              <p
-                className={cn(styles.description, {
-                  [styles.show_description]: expanded,
-                  [styles.active_description]: active === index,
-                })}
-              >
-                {item.name}
-              </p>
-            </Link>
-          </div>
-        )
-      })}
-    </div>
+                >
+                  <item.Icon
+                    className={cn(styles.boxicon, {
+                      [styles.first_and_last_trash_fix]: !middle,
+                      [styles.active]: active === index,
+                    })}
+                    styles={{ fontSize: changeSmall ? '1rem' : '2rem' }}
+                    color={
+                      hovered === index || active === index
+                        ? '#c6c6cb'
+                        : 'white'
+                    }
+                  ></item.Icon>
+                </span>
+                <p
+                  className={cn(styles.description, {
+                    [styles.show_description]: expanded,
+                    [styles.active_description]: active === index,
+                  })}
+                >
+                  {item.name}
+                </p>
+              </Link>
+            </div>
+          )
+        })}
+      </div>
+    </aside>
   )
 }
 export { Sidebar }
