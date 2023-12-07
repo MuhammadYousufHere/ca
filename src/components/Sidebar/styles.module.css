@@ -12,6 +12,10 @@
   padding-inline: 1rem;
   overflow: hidden;
 }
+
+.app_sidebar {
+  background: linear-gradient(0deg, #f3f3f3, #fff 80%) no-repeat;
+}
 .sidebar_mobile {
   z-index: 1000;
   position: fixed;
