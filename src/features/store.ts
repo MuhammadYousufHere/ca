@@ -6,11 +6,18 @@ import {
 } from '@reduxjs/toolkit'
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux'
 import customerReducer from './customers/customerSlice'
+import { customerService } from '@/api/customers'
 
-const reducer = combineReducers({ customers: customerReducer })
+const reducer = combineReducers({
+  customers: customerReducer,
+  [customerService.reducerPath]: customerService.reducer,
+})
+
 export const store = configureStore({
   reducer,
   devTools: import.meta.env.MODE !== 'production',
+  middleware: (getDefaultMiddleWare) =>
+    getDefaultMiddleWare().concat(customerService.middleware),
 })
 
 // hooks
