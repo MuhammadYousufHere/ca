@@ -1,7 +1,7 @@
 import { Button } from '@/components'
 import { AiOutlinePlus } from 'react-icons/ai'
 import Table, { IColumnType } from './molecules/Table'
-import { useAppDispatch } from '@/features'
+import { useAppDispatch, useAppSelector } from '@/features'
 import { IData, sortById, sortByName } from '@/features/customers/customerSlice'
 import { AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
@@ -20,6 +20,7 @@ export type Customer = {
 
 const Customers = () => {
   const dispatch = useAppDispatch()
+  const { customers } = useAppSelector((state) => state.customers)
   const { data, isLoading, isFetching } = useGetCustomersQuery()
 
   const [params, setParams] = useSearchParams()
@@ -114,7 +115,7 @@ const Customers = () => {
               <TableSkeleton />
             ) : data && data?.length > 0 ? (
               <Table
-                data={data}
+                data={customers}
                 columns={columns}
               />
             ) : (

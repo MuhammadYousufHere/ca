@@ -110,6 +110,9 @@ const customerSlice = createSlice({
       state.customers = newCustomers
       window.localStorage.setItem('s-customers', JSON.stringify(newCustomers))
     },
+    populateCustomers: (state, { payload }) => {
+      state.customers = payload
+    },
     deleteCustomer: (state, { payload }: PayloadAction<{ id: string }>) => {
       state.customers = state.customers.filter(({ id }) => id !== payload.id)
     },
@@ -181,6 +184,7 @@ const customerSlice = createSlice({
 
 export const {
   addCustomer,
+  populateCustomers,
   deleteCustomer,
   editCustomer,
   sortByEmail,

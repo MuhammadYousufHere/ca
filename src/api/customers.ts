@@ -1,4 +1,5 @@
-import { IData } from '@/features/customers/customerSlice'
+import { store } from '@/features'
+import { IData, populateCustomers } from '@/features/customers/customerSlice'
 import { Values } from '@/pages/Customers/AddCustomer'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
@@ -50,12 +51,14 @@ export const customerService = createApi({
     getCustomers: build.query<Omit<IData, 'actions'>[], void>({
       query: () => ({ url: `customers` }),
       transformResponse: (res: ResponseType): Omit<IData, 'actions'>[] => {
-        return res.data.map(({ profilePic, ...customer }) => {
+        const customers = res.data.map(({ profilePic, ...customer }) => {
           return {
             ...customer,
             profilePic: profilePic,
           }
         })
+        store.dispatch(populateCustomers(customers))
+        return customers
       },
       providesTags: ['Customers'],
     }),

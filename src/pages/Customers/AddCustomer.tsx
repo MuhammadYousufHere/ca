@@ -72,6 +72,7 @@ export default function AddCustomer({ isOpen, setIsOpen }: Props) {
         <Input
           name='name'
           value={values.name}
+          required
           onChange={handleChange}
           autoFocus
           placeholder='Customer Name'
@@ -79,6 +80,7 @@ export default function AddCustomer({ isOpen, setIsOpen }: Props) {
         <Input
           name='email'
           value={values.email}
+          required
           onChange={handleChange}
           placeholder='Email'
         />
