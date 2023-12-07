@@ -1,3 +1,4 @@
+import { Values } from '@/pages/Customers/AddCustomer'
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
@@ -6,7 +7,7 @@ export interface IData {
   id: string
   actions?: JSX.Element
   email: string
-  profileUrl: string | ArrayBuffer
+  profilePic: string | ArrayBuffer
 }
 
 type Order = {
@@ -20,10 +21,9 @@ type InitalState = {
   isError: boolean
   error: unknown
 }
-const customers =
-  JSON.parse(window.localStorage.getItem('s-customers') || '[]') || []
+
 const initialState: InitalState = {
-  customers,
+  customers: [],
   isLoading: false,
   isSuccess: false,
   isError: false,
@@ -61,7 +61,43 @@ export const getCustomers = createAsyncThunk<UsersResponse, number>(
     }
   }
 )
+const ServerEndpoint = 'http://localhost:3000'
+export const getAllCustomers = createAsyncThunk<UsersResponse, void>(
+  'customers/all',
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(`${ServerEndpoint}/customers`)
+      if (res?.status === 200) {
+        console.log(res.data)
 
+        return res.data
+      }
+    } catch (ex) {
+      rejectWithValue(ex)
+    }
+  }
+)
+type Response = { data?: unknown; message: string; statusCode: number }
+export const addNewCustomer = createAsyncThunk<Response, Values>(
+  'customer/add',
+  async (body, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${ServerEndpoint}/customers`, body, {
+        headers: { 'Content-Type': 'Application/json' },
+      })
+
+      return response.data
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        const message = err.response?.data.message
+        const status = err.response.status
+        return rejectWithValue({ message, status })
+      }
+      // @ts-expect-error iknow
+      return rejectWithValue({ message: err.message, status: err.code })
+    }
+  }
+)
 const customerSlice = createSlice({
   name: 'customer',
   initialState,
@@ -131,7 +167,7 @@ const customerSlice = createSlice({
           name: `${user.first_name} ${user.last_name}`,
           id: String(user.id),
           email: user.email,
-          profileUrl: user.avatar,
+          profilePic: user.avatar,
         }))
       })
       .addCase(getCustomers.rejected, (state, { payload }) => {
