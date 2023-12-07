@@ -1,4 +1,4 @@
-import { useState, HTMLProps, useRef } from 'react'
+import { useState, HTMLProps, useRef, ChangeEvent } from 'react'
 import { BiSolidFileImage } from 'react-icons/bi'
 // import { MdDelete } from 'react-icons/md'
 import { TbCloudUpload } from 'react-icons/tb'
@@ -13,7 +13,8 @@ export default function FileInput(props: Props) {
 
   const ref = useRef<HTMLInputElement>(null)
 
-  const handleFileChange = () => {
+  // eslint-disable-next-line
+  const handleFileChange = (_e: ChangeEvent<HTMLInputElement>) => {
     if (ref.current) {
       const selectedFile = ref.current?.files?.[0]
 
