@@ -5,6 +5,7 @@ import mysql from 'mysql2'
 const app = express()
 
 app.use(express.json({ limit: '5mb' }))
+app.use(express.raw({ limit: '5mb' }))
 app.use(cors())
 
 const db = mysql.createConnection({
@@ -82,7 +83,7 @@ app.post('/customers', (req, res) => {
 })
 
 // Update customer by ID
-app.put('/customers/:id', (req, res) => {
+app.patch('/customers/:id', (req, res) => {
   const customerId = req.params.id
 
   const allowedFields = ['name', 'email', 'profilePic']
@@ -93,7 +94,9 @@ app.put('/customers/:id', (req, res) => {
     .join(', ')
 
   if (!setClauses) {
-    return res.status(400).send('No valid fields provided for update')
+    return res
+      .status(400)
+      .json({ message: 'No valid fields provided for update', statusCode: 400 })
   }
 
   const updateCustomerQuery = `UPDATE Customers SET ${setClauses} WHERE id = ?`
@@ -129,7 +132,7 @@ app.delete('/customers/:id', (req, res) => {
     if (err) {
       res.status(500).send('Error deleting customer')
     } else if (result.affectedRows === 0) {
-      res.status(404).send('Customer not found')
+      res.status(404).json({ message: 'Customer not found', statusCode: 404 })
     } else {
       res
         .status(200)
