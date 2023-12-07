@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+  mariadb:
+    image: mariadb
+    container_name: mariadb
+    networks:
+      - comm_network
+    environment:
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+      - MYSQL_ROOT_PASSWORD=password123@
+      - MYSQL_DATABASE=saviynt
+      - MYSQL_ROOT_HOST=%
+    ports:
+      - 3306:3306
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+networks:
+  comm_network:
+    name: mariadb_database
