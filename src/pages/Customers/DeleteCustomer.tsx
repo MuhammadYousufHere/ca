@@ -2,9 +2,11 @@ import { BaseModal, Loader } from '@/components/common'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { IoTrashOutline, IoClose } from 'react-icons/io5'
 import styles from './style.module.css'
-import { useAppDispatch } from '@/features'
+import { useDeleteCustomerMutation } from '@/api/customers'
 import { sleep } from '@/utils'
-import { deleteCustomer } from '@/features/customers/customerSlice'
+
+// import { useAppDispatch } from '@/features'
+// import { deleteCustomer } from '@/features/customers/customerSlice'
 
 type Props = {
   userId: string
@@ -12,14 +14,25 @@ type Props = {
   setIsOpen: Dispatch<SetStateAction<boolean>>
 }
 export default function DeleteCustomer({ isOpen, setIsOpen, userId }: Props) {
+  const [deleteCustomer, { isLoading: isDeleting }] =
+    useDeleteCustomerMutation()
   const [isLoading, setIsLoading] = useState(false)
-  const dispatch = useAppDispatch()
+
+  /*local setup*/
+  // const dispatch = useAppDispatch()
   async function handleDelete() {
     setIsLoading(true)
     await sleep()
-    dispatch(deleteCustomer({ id: userId }))
-    setIsLoading(false)
-    setIsOpen(false)
+
+    /* local setup */
+    // dispatch(deleteCustomer({ id: userId }))
+    try {
+      await deleteCustomer({ id: userId }).unwrap()
+      setIsLoading(false)
+      setIsOpen(false)
+    } catch (error) {
+      setIsLoading(false)
+    }
   }
   return (
     <BaseModal
@@ -41,7 +54,7 @@ export default function DeleteCustomer({ isOpen, setIsOpen, userId }: Props) {
         <div className={styles.delete_actions}>
           <button onClick={() => setIsOpen(false)}>CANCEL</button>
           <button onClick={handleDelete}>
-            {isLoading ? <Loader /> : 'DELETE'}
+            {isLoading || isDeleting ? <Loader /> : 'DELETE'}
           </button>
         </div>
       </section>

@@ -3,9 +3,12 @@ import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
 import styles from './style.module.css'
 import { FileInput, Input } from '@/components/Form'
 import { Values } from './AddCustomer'
-import { useAppDispatch } from '@/features'
-import { editCustomer } from '@/features/customers/customerSlice'
 import { sleep } from '@/utils'
+import { useUpdateCustomerMutation } from '@/api/customers'
+
+/*local setup*/
+// import { useAppDispatch } from '@/features'
+// import { editCustomer } from '@/features/customers/customerSlice'
 
 type Props = {
   isOpen: boolean
@@ -19,7 +22,10 @@ export default function EditCustomer({
   initialValues,
   userId,
 }: Props) {
-  const dispatch = useAppDispatch()
+  /*local setup*/
+  // const dispatch = useAppDispatch()
+
+  const [updateCustomr, { isLoading: isUpdating }] = useUpdateCustomerMutation()
   const [values, setValues] = useState<Values>(initialValues)
   const [isLoading, setIsLoading] = useState(false)
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -32,21 +38,30 @@ export default function EditCustomer({
         if (!e.target) return
 
         // @ts-expect-error iknow
-        setValues((p) => ({ ...p, profileUrl: e.target?.result }))
+        setValues((p) => ({ ...p, profilePic: e.target?.result }))
       }
       reader.readAsDataURL(file)
     }
   }
   async function handleEdit() {
+    //
     setIsLoading(true)
     await sleep()
-    dispatch(editCustomer({ ...values, id: userId }))
-    setIsLoading(false)
-    setIsOpen(false)
+    /* local setup*/
+    // dispatch(editCustomer({ ...values, id: userId }))
+
+    try {
+      await updateCustomr({ ...values, id: userId }).unwrap()
+      setIsLoading(false)
+      setIsOpen(false)
+    } catch (error) {
+      setIsLoading(false)
+    }
   }
   return (
     <Modal
-      isLoading={isLoading}
+      // to simulate real loading as local server is fast
+      isLoading={isLoading || isUpdating}
       onClick={handleEdit}
       buttonLabel='EDIT CUSTOMER'
       label='Edit Customer'
@@ -68,7 +83,7 @@ export default function EditCustomer({
         />
 
         <FileInput
-          name='profileUrl'
+          name='profilePic'
           onFileChange={onFileChangeHandler}
         />
       </div>

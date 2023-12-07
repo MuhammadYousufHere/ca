@@ -1,41 +1,29 @@
 import { Button } from '@/components'
 import { AiOutlinePlus } from 'react-icons/ai'
 import Table, { IColumnType } from './molecules/Table'
-import { useAppDispatch, useAppSelector } from '@/features'
-import {
-  IData,
-  getCustomers,
-  sortById,
-  sortByName,
-} from '@/features/customers/customerSlice'
-import { asThunkHook } from '@/hooks'
+import { useAppDispatch } from '@/features'
+import { IData, sortById, sortByName } from '@/features/customers/customerSlice'
 import { AnimatePresence } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import AddCustomer from './AddCustomer'
 import styles from './style.module.css'
-import { SortButton } from './atoms'
+import { SortButton, TableSkeleton } from './atoms'
 import { useSearchParams } from 'react-router-dom'
-
-const useCustomers = asThunkHook(getCustomers)
+import { useGetCustomersQuery } from '@/api/customers'
 
 export type Customer = {
   id: string
   name: string
-  profileUrl: string | ArrayBuffer
+  profilePic: string | ArrayBuffer
   email: string
 }
 
 const Customers = () => {
   const dispatch = useAppDispatch()
+  const { data, isLoading, isFetching } = useGetCustomersQuery()
 
   const [params, setParams] = useSearchParams()
-  const [fetchCustomer] = useCustomers()
-  const { customers } = useAppSelector((state) => state.customers)
   const [addCustomer, setAddCustomer] = useState(false)
-
-  useEffect(() => {
-    fetchCustomer(1)
-  }, [])
 
   function emailSortHandler() {
     if (params.has('sortby')) {
@@ -84,7 +72,7 @@ const Customers = () => {
   }
   const columns: IColumnType<IData>[] = [
     {
-      key: 'profileUrl',
+      key: 'profilePic',
       title: '',
       width: 130,
     },
@@ -122,9 +110,11 @@ const Customers = () => {
         />
         <AnimatePresence>
           <div className={styles.customers_table}>
-            {customers.length > 0 ? (
+            {isLoading || isFetching ? (
+              <TableSkeleton />
+            ) : data && data?.length > 0 ? (
               <Table
-                data={customers}
+                data={data}
                 columns={columns}
               />
             ) : (
@@ -136,7 +126,6 @@ const Customers = () => {
       <AddCustomer
         isOpen={addCustomer}
         setIsOpen={setAddCustomer}
-        lastUserId={(customers[customers?.length - 1]?.id || 0) as number}
       />
     </>
   )

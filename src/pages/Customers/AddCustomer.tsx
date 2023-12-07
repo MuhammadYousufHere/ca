@@ -3,24 +3,28 @@ import { Modal } from '@/components/common'
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
 import styles from './style.module.css'
 import { sleep } from '@/utils'
-import { useAppDispatch } from '@/features'
-import { addCustomer } from '@/features/customers/customerSlice'
+import { useAddCustomerMutation } from '@/api/customers'
+// import { useAppDispatch } from '@/features'
+// import { addCustomer } from '@/features/customers/customerSlice'
 
 type Props = {
   isOpen: boolean
   setIsOpen: Dispatch<SetStateAction<boolean>>
-  lastUserId: number
 }
 export type Values = {
   name: string
   email: string
-  profileUrl: string | ArrayBuffer
+  profilePic: string | ArrayBuffer
 }
-const initialValues = { name: '', email: '', profileUrl: '/avatar.png' }
+const initialValues = { name: '', email: '', profilePic: '/avatar-default.jpg' }
 
-export default function AddCustomer({ isOpen, setIsOpen, lastUserId }: Props) {
-  const dispatch = useAppDispatch()
+export default function AddCustomer({ isOpen, setIsOpen }: Props) {
+  // const dispatch = useAppDispatch()
+
+  // with server
+  const [addUser, { isLoading: isAddingUser }] = useAddCustomerMutation()
   const [values, setValues] = useState<Values>(initialValues)
+
   const [isLoading, setIsLoading] = useState(false)
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -34,7 +38,7 @@ export default function AddCustomer({ isOpen, setIsOpen, lastUserId }: Props) {
         if (!e.target) return
 
         // @ts-expect-error iknow
-        setValues((p) => ({ ...p, profileUrl: e.target?.result }))
+        setValues((p) => ({ ...p, profilePic: e.target?.result }))
       }
       reader.readAsDataURL(file)
     }
@@ -42,11 +46,17 @@ export default function AddCustomer({ isOpen, setIsOpen, lastUserId }: Props) {
   async function handleSubmit() {
     setIsLoading(true)
     await sleep()
-    dispatch(addCustomer({ ...values, id: String(++lastUserId) }))
+
+    /* if using local */
+    // dispatch(addCustomer({ ...values, id: String(++lastUserId) }))
+
+    /* using server */
+    await addUser(values).unwrap()
     setValues(initialValues)
-    setIsLoading(false)
+
+    /* uncommit also this when using local setup*/
+    // setIsLoading(false)
     setIsOpen(false)
-    //
   }
   return (
     <Modal
@@ -55,7 +65,8 @@ export default function AddCustomer({ isOpen, setIsOpen, lastUserId }: Props) {
       isOpen={isOpen}
       setIsOpen={() => setIsOpen(!isOpen)}
       onClick={handleSubmit}
-      isLoading={isLoading}
+      // to simulate real loading as local server is fast
+      isLoading={isAddingUser || isLoading}
     >
       <div className={styles.addcustomer_wrapper}>
         <Input
@@ -73,7 +84,7 @@ export default function AddCustomer({ isOpen, setIsOpen, lastUserId }: Props) {
         />
 
         <FileInput
-          name='profileUrl'
+          name='profilePic'
           onFileChange={onFileChangeHandler}
         />
       </div>
