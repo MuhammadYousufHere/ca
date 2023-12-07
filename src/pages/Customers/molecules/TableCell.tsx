@@ -30,10 +30,10 @@ export default function TableRowCell({
   const value = get(item, column.key)
   const Cells = () => {
     switch (column.key) {
-      case 'profileUrl':
+      case 'profilePic':
         return (
           <td className={styles.td}>
-            <Avatar src={item.profileUrl} />
+            <Avatar src={item.profilePic} />
           </td>
         )
       case 'actions':
