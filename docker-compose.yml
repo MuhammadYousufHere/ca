@@ -9,9 +9,13 @@ services:
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=admin
       - MYSQL_ROOT_PASSWORD=password123@
+      - MYSQL_DATABASE=saviynt
       - MYSQL_ROOT_HOST=%
     ports:
       - 3306:3306
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db:/var/lib/mysql
 
 networks:
   comm_network:
