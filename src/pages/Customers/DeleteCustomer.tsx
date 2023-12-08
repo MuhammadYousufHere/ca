@@ -4,6 +4,7 @@ import { IoTrashOutline, IoClose } from 'react-icons/io5'
 import styles from './style.module.css'
 import { useDeleteCustomerMutation } from '@/api/customers'
 import { sleep } from '@/utils'
+import useToast from '@/features/Toast/useToast'
 
 // import { useAppDispatch } from '@/features'
 // import { deleteCustomer } from '@/features/customers/customerSlice'
@@ -14,6 +15,8 @@ type Props = {
   setIsOpen: Dispatch<SetStateAction<boolean>>
 }
 export default function DeleteCustomer({ isOpen, setIsOpen, userId }: Props) {
+  const { addAutoDismissToast } = useToast()
+
   const [deleteCustomer, { isLoading: isDeleting }] =
     useDeleteCustomerMutation()
   const [isLoading, setIsLoading] = useState(false)
@@ -30,7 +33,15 @@ export default function DeleteCustomer({ isOpen, setIsOpen, userId }: Props) {
       await deleteCustomer({ id: userId }).unwrap()
       setIsLoading(false)
       setIsOpen(false)
+      addAutoDismissToast({
+        message: 'Successfully deleted the customer',
+        severity: 'success',
+      })
     } catch (error) {
+      addAutoDismissToast({
+        message: 'Something went wrong',
+        severity: 'error',
+      })
       setIsLoading(false)
     }
   }

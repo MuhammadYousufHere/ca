@@ -4,6 +4,7 @@ import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
 import styles from './style.module.css'
 import { sleep } from '@/utils'
 import { useAddCustomerMutation } from '@/api/customers'
+import useToast from '@/features/Toast/useToast'
 // import { useAppDispatch } from '@/features'
 // import { addCustomer } from '@/features/customers/customerSlice'
 
@@ -19,6 +20,7 @@ export type Values = {
 const initialValues = { name: '', email: '', profilePic: '/avatar-default.jpg' }
 
 export default function AddCustomer({ isOpen, setIsOpen }: Props) {
+  const { addAutoDismissToast } = useToast()
   // const dispatch = useAppDispatch()
 
   // with server
@@ -51,12 +53,23 @@ export default function AddCustomer({ isOpen, setIsOpen }: Props) {
     // dispatch(addCustomer({ ...values, id: String(++lastUserId) }))
 
     /* using server */
-    await addUser(values).unwrap()
-    setValues(initialValues)
+    try {
+      await addUser(values).unwrap()
+      addAutoDismissToast({
+        message: 'Successfully added new customer',
+        severity: 'success',
+      })
+      setValues(initialValues)
 
-    /* uncommit also this when using local setup*/
-    // setIsLoading(false)
-    setIsOpen(false)
+      setIsLoading(false)
+      setIsOpen(false)
+    } catch (error) {
+      addAutoDismissToast({
+        message: 'Something went wrong',
+        severity: 'error',
+      })
+      setIsLoading(false)
+    }
   }
   return (
     <Modal

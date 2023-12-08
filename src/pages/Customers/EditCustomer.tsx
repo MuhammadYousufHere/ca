@@ -5,6 +5,7 @@ import { FileInput, Input } from '@/components/Form'
 import { Values } from './AddCustomer'
 import { sleep } from '@/utils'
 import { useUpdateCustomerMutation } from '@/api/customers'
+import useToast from '@/features/Toast/useToast'
 
 /*local setup*/
 // import { useAppDispatch } from '@/features'
@@ -24,6 +25,7 @@ export default function EditCustomer({
 }: Props) {
   /*local setup*/
   // const dispatch = useAppDispatch()
+  const { addAutoDismissToast } = useToast()
 
   const [updateCustomr, { isLoading: isUpdating }] = useUpdateCustomerMutation()
   const [values, setValues] = useState<Values>(initialValues)
@@ -54,8 +56,16 @@ export default function EditCustomer({
       await updateCustomr({ ...values, id: userId }).unwrap()
       setIsLoading(false)
       setIsOpen(false)
+      addAutoDismissToast({
+        message: 'Successfully deleted the customer',
+        severity: 'success',
+      })
     } catch (error) {
       setIsLoading(false)
+      addAutoDismissToast({
+        message: 'Something went wrong',
+        severity: 'error',
+      })
     }
   }
   return (

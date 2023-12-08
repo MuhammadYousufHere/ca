@@ -52,8 +52,9 @@
 /* Modal  */
 
 .modal {
+  overflow: hidden;
   display: grid;
-  overflow-y: scroll;
+  overflow-y: auto;
   position: fixed;
   top: 0;
   right: 0;

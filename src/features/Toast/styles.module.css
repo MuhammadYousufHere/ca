@@ -1,0 +1,42 @@
+.main_wrapper {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  z-index: 3232;
+}
+.alert_container {
+  width: max-content;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 15px;
+  border-radius: 10px;
+  background: #ffff;
+  gap: 20px;
+  padding-block: 0;
+  text-align: left;
+  font-family: Poppins;
+}
+.alert_container_icon {
+  padding: 8px;
+  font-size: 1.1rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #4bb36e;
+  color: #fff;
+}
+.alert_container_error {
+  background-color: #ff3d2e;
+}
+.error {
+  border: 1px solid #ff3d2e;
+}
+.success {
+  border: 1px solid #68cd67;
+}
+
+.close {
+  font-size: 0.8rem;
+}

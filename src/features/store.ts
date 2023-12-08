@@ -7,9 +7,11 @@ import {
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux'
 import customerReducer from './customers/customerSlice'
 import { customerService } from '@/api/customers'
+import toastReducer from './Toast/toastSlice'
 
 const reducer = combineReducers({
   customers: customerReducer,
+  toast: toastReducer,
   [customerService.reducerPath]: customerService.reducer,
 })
 
